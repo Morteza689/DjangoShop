@@ -1,0 +1,136 @@
+{% extends 'shared/_layout.html' %}
+{% load render_partial %}
+
+{% block title %}
+    ویرایش اطلاعات کاربری
+{% endblock %}
+
+{% block content %}
+    <main class="page-content" style="margin-top: 205.5px; transform: none;">
+        <div class="container" style="transform: none;">
+            <div class="row mb-5" style="transform: none;">
+                <div class="col-lg-3 col-md-4 mb-md-0 mb-3 sticky-sidebar"
+                     style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+
+                    <div class="theiaStickySidebar"
+                         style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;">
+                        <div class="sidebar-widget">
+                            {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+                        </div>
+                        <div class="resize-sensor"
+                             style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;">
+                            <div class="resize-sensor-expand"
+                                 style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                                <div style="position: absolute; left: 0px; top: 0px; transition: all 0s ease 0s; width: 403px; height: 612px;"></div>
+                            </div>
+                            <div class="resize-sensor-shrink"
+                                 style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                                <div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="section-title mb-2">
+                        نشانی‌ها
+                    </div>
+                    <div class="checkout-section shadow-around">
+                        <div class="checkout-section-content">
+                            <div class="row mx-0">
+
+
+                            {% if address %}
+                            {% for addres in address %}
+                                    <div class="col-xl-3 col-lg-4 col-sm-6 mb-3">
+                                        <div class="custom-control custom-radio">
+                                            <label class="custom-control-label address-select" for="customRadio{{ addres.id }}">
+                                                <span class="head-address-select">آدرس:</span>
+                                                <span>{{ addres.address }}</span>
+                                                <span>
+                                                    <i class="fa fa-user"></i>
+                                                    گیرنده  : {{ addres.receiver }}
+                                                </span>
+                                                <span>
+                                                    <i class="fa fa-phone"></i>
+                                                    شماره گیرنده  : {{ addres.number_receiver }}
+                                                </span>
+                                                <span>
+                                                    کد پستی : {{ addres.zipcode }}
+                                                </span>
+                                                <a href="{% url 'user_delete_address' id=addres.id %}" class="link--with-border-bottom edit-address-btn">
+                                                    حذف
+                                                    <i class="fa fa-album"></i>
+                                                </a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                {% else %}
+                                <div class="alert alert-info col-10 text-center container" >
+                                لطفا از فرم پایین آدرسی اضافه کنید
+                                </div>
+                            {% endif %}
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-title mb-2">
+                        افزودن نشانی
+                    </div>
+                    <div class="checkout-section shadow-around">
+                        <div class="modal-body" data-select2-id="select2-data-19-btj6">
+                            <form action="{% url 'user_edit_address' %}" method="post">
+                                {% csrf_token %}
+                                <div class="row" data-select2-id="select2-data-17-an4v">
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="text-sm text-muted mb-1">{{ form.receiver.label }}</div>
+                                        <div class="text-dark font-weight-bold">
+                                            <div class="form-element-row mb-0">
+                                                {{ form.receiver }}
+                                            </div>
+                                            {{ form.receiver.errors }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="text-sm text-muted mb-1">{{ form.number_receiver.label }}</div>
+                                        <div class="text-dark font-weight-bold">
+                                            <div class="form-element-row mb-0">
+                                                {{ form.number_receiver }}
+                                            </div>
+                                            {{ form.number_receiver.errors }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="text-sm text-muted mb-1">{{ form.zipcode.label }}</div>
+                                        <div class="text-dark font-weight-bold">
+                                            <div class="form-element-row mb-0">
+                                                {{ form.zipcode }}
+                                            </div>
+                                            {{ form.zipcode.errors }}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <div class="text-sm text-muted mb-1">{{ form.address.label }}</div>
+                                        <div class="text-dark font-weight-bold">
+                                            <div class="form-element-row mb-0">
+                                                {{ form.address }}
+                                            </div>
+                                            {{ form.address.errors }}
+                                        </div>
+                                    </div>
+                                    <button onclick="kos" type="submit" class="btn btn-primary">  ذخیره  <i
+                                            class="fad fa-money-check-edit"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

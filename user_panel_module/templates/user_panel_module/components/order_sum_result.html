@@ -1,0 +1,17 @@
+{% load poll_extras %}
+
+    <div class="d-flex justify-content-between px-3 py-2">
+        <span class="font-weight-bold">جمع</span>
+        <span class="font-weight-bold">
+                                    {{ sum | three_digits_currency2 }}
+                                    <span class="text-sm">تومان</span>
+                                </span>
+    </div>
+    <hr>
+    <div class="d-flex justify-content-between px-3 py-2">
+        <span class="font-weight-bold">مبلغ قابل پرداخت</span>
+        <span class="font-weight-bold">
+                                    {{ sum | three_digits_currency2 }}
+                                    <span class="text-sm">تومان</span>
+                                </span>
+    </div>

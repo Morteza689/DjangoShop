@@ -1,0 +1,144 @@
+{% extends 'shared/_layout.html' %}
+{% load render_partial %}
+{% load poll_extras %}
+{% block title %}
+    جزییات خرید
+{% endblock %}
+
+{% block content %}
+
+
+    <main class="page-content" style="margin-top: 205.5px; transform: none;">
+        <div class="container" style="transform: none;">
+            <div class="row mb-5" style="transform: none;">
+                <div class="col-lg-3 col-md-4 mb-md-0 mb-3 sticky-sidebar"
+                     style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+
+                    <div class="theiaStickySidebar"
+                         style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;">
+                        <div class="sidebar-widget">
+                            {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+                        </div>
+                        <div class="resize-sensor"
+                             style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;">
+                            <div class="resize-sensor-expand"
+                                 style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                                <div style="position: absolute; left: 0px; top: 0px; transition: all 0s ease 0s; width: 403px; height: 612px;"></div>
+                            </div>
+                            <div class="resize-sensor-shrink"
+                                 style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                                <div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="section-title mb-2">
+                        <span class="ml-2">جزئیات سفارش</span>
+                        <span class="text-muted ml-2">|</span>
+                        <span class="font-en ml-2">{{ order.id }}</span>
+                        <span class="text-muted ml-2">|</span>
+                        <span class="text-sm text-secondary">{{ order.paymant_date | show_jalali_date }}</span>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <section class="shadow-around p-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="checkout-section shadow-around p-2">
+                                            <div class="checkout-section-content">
+                                                <div class="cart-items">
+                                                    <div class="mb-2">
+                                                        <span class="text-muted">تحویل گیرنده:</span>
+                                                        <span class="font-weight-bold">{{ user }}</span>
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        <span class="text-muted">شماره تماس :</span>
+                                                        <span class="font-weight-bold">{{ user.number }}</span>
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        <span class="text-muted d-block">ارسال به:</span>
+                                                        <span class="font-weight-bold">{{ order.address }}</span>
+                                                    </div>
+
+                                                    {% if order.posted %}
+                                                        <div class="mb-2">
+                                                            <span class="text-muted">وضعیت :</span>
+                                                            <span class="font-weight-bold text-success">ارسال شده</span>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <span class="text-muted">کد پیگیری پستی :</span>
+                                                            <span class="font-weight-bold text-info">{{ order.ref_code_post }}</span>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="mb-2">
+                                                         <span class="text-muted">وضعیت :</span>
+                                                        <span class="font-weight-bold text-info">در حال پردازش</span>
+                                                        </div>
+                                                    {% endif %}
+
+                                                <div class="mb-2">
+                                                    <span class="text-muted">مبلغ کل این مرسوله :</span>
+                                                    <span class="font-weight-bold">
+                                                                {{ order.calculate_total_price | three_digits_currency2 }}
+                                                                <span class="text-sm text-secondary">تومان</span>
+                                                            </span>
+                                                </div>
+                                                <hr>
+
+                                                {% for detail in order.orderdetaile_set.all %}
+                                                    <div class="cart-item py-4 px-3">
+                                                        <div class="item-thumbnail">
+                                                            <a href="{{ detail.product.get_absolute_url }}">
+                                                                <img src="{{ detail.product.image.url }}"
+                                                                     alt="item">
+                                                            </a>
+                                                        </div>
+                                                        <div class="item-info flex-grow-1">
+                                                            <div class="item-title">
+                                                                <h2>
+                                                                    <a href="{{ detail.product.get_absolute_url }}">{{ detail.product.title }}</a>
+                                                                </h2>
+                                                            </div>
+                                                            <div class="item-detail">
+                                                                <ul>
+                                                                    <li>
+                                                                        <i class="far fa-shield-check text-muted"></i>
+                                                                        <span>شناسه محصول : {{ detail.product.id }}</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <i class="far fa-store-alt text-muted"></i>
+                                                                        <span>نام فروشنده</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <i class="far fa-store-alt text-muted"></i>
+                                                                        <span>تعداد : {{ detail.count }}</span>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="item-quantity--item-price">
+                                                                    <div class="item-price">
+                                                                        <span class="text-muted"> قیمت :</span>
+                                                                        {% moltiply2 detail.product.price detail.count %}<span
+                                                                            class="text-sm mr-1">تومان</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+{% endblock %}

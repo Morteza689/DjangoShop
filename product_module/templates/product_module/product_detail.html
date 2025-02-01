@@ -1,0 +1,510 @@
+{% extends 'shared/_layout.html' %}
+{% load render_partial %}
+{% load poll_extras %}
+{% load thumbnail %}
+{% block title %}
+    {{ product.title }}
+{% endblock %}
+
+{% block content %}
+    <main class="page-content" style="margin-top: 150.5px;">
+        <div class="container">
+            <div class="row mb-1">
+                <div class="col-12">
+                    <!-- breadcrumb -->
+                    <div class="breadcrumb mb-1">
+                        <nav>
+                            <a href="#">فروشگاه اینترنتی</a>
+                        </nav>
+                    </div>
+                    <!-- end breadcrumb -->
+                </div>
+            </div>
+            <div class="product-detail shadow-around mb-5 py-5">
+                <div class="row mb-3 mx-0">
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-md-0 mb-3">
+                        <div class="product-gallery">
+                            <div class="swiper-container gallery-slider pb-md-0 pb-3 swiper-container-initialized swiper-container-horizontal swiper-container-rtl">
+                                <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);">
+                                    {% for gallery in gallery_product %}
+                                        <div class="swiper-slide swiper-slide-active" style="width: 371px;">
+                                            <img src="{{ gallery.image.url }}"
+                                                 data-large="{{ gallery.image.url }}" class="zoom-image"
+                                                 alt="gallery item">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <!-- Add Pagination -->
+                                <div class="swiper-pagination d-md-none swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-bullets-dynamic"
+                                     style="width: 40px;"><span
+                                        class="swiper-pagination-bullet swiper-pagination-bullet-active swiper-pagination-bullet-active-main"
+                                        tabindex="0" role="button" aria-label="Go to slide 1"
+                                        style="right: 16px;"></span><span
+                                        class="swiper-pagination-bullet swiper-pagination-bullet-active-next"
+                                        tabindex="0" role="button" aria-label="Go to slide 2"
+                                        style="right: 16px;"></span><span
+                                        class="swiper-pagination-bullet swiper-pagination-bullet-active-next-next"
+                                        tabindex="0" role="button" aria-label="Go to slide 3"
+                                        style="right: 16px;"></span><span class="swiper-pagination-bullet" tabindex="0"
+                                                                          role="button" aria-label="Go to slide 4"
+                                                                          style="right: 16px;"></span><span
+                                        class="swiper-pagination-bullet" tabindex="0" role="button"
+                                        aria-label="Go to slide 5" style="right: 16px;"></span><span
+                                        class="swiper-pagination-bullet" tabindex="0" role="button"
+                                        aria-label="Go to slide 6" style="right: 16px;"></span><span
+                                        class="swiper-pagination-bullet" tabindex="0" role="button"
+                                        aria-label="Go to slide 7" style="right: 16px;"></span><span
+                                        class="swiper-pagination-bullet" tabindex="0" role="button"
+                                        aria-label="Go to slide 8" style="right: 16px;"></span></div>
+                                <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+                            <div class="swiper-container gallery-slider-thumbs d-md-block d-none swiper-container-initialized swiper-container-horizontal swiper-container-rtl">
+                                <div class="swiper-wrapper"
+                                     style="transition-duration: 0ms; transform: translate3d(-139.125px, 0px, 0px);">
+                                    {% for gallery in gallery_product %}
+                                        <div class="swiper-slide swiper-slide-active" style="width: 92.75px;">
+                                            <img src="{{ gallery.image.url }}" alt="gallery item">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <!-- Add Arrows -->
+                                <div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide"
+                                     aria-disabled="false"></div>
+                                <div class="swiper-button-prev swiper-button-disabled" tabindex="0" role="button"
+                                     aria-label="Previous slide" aria-disabled="true"></div>
+                                <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+                            {#                            <ul class="product--actions">#}
+                            {#                                <li>#}
+                            {#                                    <!-- در صورت نیاز به استفاده از فرم از کد زیر استفاده کنید -->#}
+                            {#                                    <!-- <form action="">#}
+                            {#                                        <button class="add-to-favorite"><i class="fas fa-heart"></i></button>#}
+                            {#                                    </form> -->#}
+                            {#                                    <a href="#" class="is-action add-to-favorite"><i class="fas fa-heart"></i></a>#}
+                            {#                                    <span class="tooltip--action">افزودن به علاقمندی</span>#}
+                            {#                                </li>#}
+                            {#                            </ul>#}
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-4 col-md-6">
+                        <div class="product-title mb-3">
+                            <h1>
+                                {{ product.title }}
+                            </h1>
+                        </div>
+                        {% if product.brand %}
+                            <div class="d-block mb-2">
+                                <span class="font-weight-bold">برند:</span>
+                                <a href="#" class="link--with-border-bottom">{{ product.brand }}</a>
+                            </div>
+                        {% endif %}
+                        <div class="product-params-special">
+                            <ul data-title="توضیحات کوتاه">
+                                <li>
+                                    <span>{{ product.short_discription }}</span>
+                            </ul>
+                        </div>
+                        <div class="alert alert-warning">
+                            <div class="alert-body">
+                                <p class="d-flex align-items-center">
+                                    <i class="fad fa-history ml-2"></i>
+                                    حداکثر تا 3 روز تحویل داده می شود.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 mx-lg-0 mx-auto">
+                        <div class="box-info-product">
+                            <div class="d-block mb-3">
+                                    <span class="d-block">
+                                        تعداد:
+                                    </span>
+                                <div class="num-block">
+                                    <div class="num-in">
+                                        <span class="plus"></span>
+                                        <input readonly="" class="in-num" id="product_count" type="text" min="1"
+                                               value="1">
+                                        <span class="minus dis"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-end mt-3">
+                                <div class="product-price">
+                                    {% if product.off %}
+                                        <div class="product-price-info">
+                                            <div class="product-price-off">
+                                                <span>تخفیف</span>
+                                            </div>
+                                            <div class="product-price-prev">
+                                                {{ product.price | three_digits_currency }}
+                                            </div>
+                                        </div>
+                                        <div class="product-price-real">
+                                            <div class="product-price-raw">{{ product.offer_price | three_digits_currency2 }}</div>
+                                            تومان
+                                        </div>
+                                    {% else %}
+                                        <div class="product-price-real">
+                                            <div class="product-price-raw">{{ product.price | three_digits_currency2 }}</div>
+                                            تومان
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <button onclick="addProductToOrder({{ product.id }})"
+                                        class="add-to-cart">
+                                    افـزودن به سبـد خریـد
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-3">
+                    <div class="row mx-0">
+                        <div class="col-12">
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                <div class="services pt-3 row mx-0">
+                    <div class="col-md-3 col-sm-6 mb-md-0 mb-4">
+                        <div class="service-item">
+                            <img src="/static/images/services/delivery-person.png" alt="">
+                            <div class="service-item-body">
+                                <h6>تحویل سریع و رایگان</h6>
+                                <p>تحویل رایگان کالا برای کلیه سفارشات بیش از 1 میلیون تومان</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-md-0 mb-4">
+                        <div class="service-item">
+                            <img src="/static/images/services/headset.png" alt="">
+                            <div class="service-item-body">
+                                <h6>پشتیبانی ۲۴ ساعته</h6>
+                                <p>در صورت وجود هرگونه سوال یا ابهامی، با ما در تماس باشید</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-md-0 mb-4">
+                        <div class="service-item">
+                            <img src="/static/images/services/debit-card.png" alt="">
+                            <div class="service-item-body">
+                                <h6>پرداخت آنلاین ایمن</h6>
+                                <p>محصولات مدنظر خود را با خیال آسوده به صورت آنلاین خریداری کنید</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- sellers -->
+
+            <!-- end sellers -->
+            <!-- product-tab-content -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="product-tab-content">
+                        <ul class="nav nav-tabs" id="product-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="productDescription-tab" data-toggle="tab"
+                                   href="#productDescription" role="tab" aria-controls="productDescription"
+                                   aria-selected="true">توضیحات</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="productComments-tab" data-toggle="tab" href="#productComments"
+                                   role="tab" aria-controls="productComments" aria-selected="false">نظرات</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="product-tab">
+                            <div class="tab-pane fade show active" id="productDescription" role="tabpanel"
+                                 aria-labelledby="productDescription-tab">
+                                <div class="product-desc">
+                                    <div class="accordion accordion-product" id="accordionDescription">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn" type="button" data-toggle="collapse"
+                                                            data-target="#collapseOne" aria-expanded="true"
+                                                            aria-controls="collapseOne">
+                                                        {{ product.title }}
+                                                    </button>
+                                                </h5>
+                                            </div>
+
+                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                                 data-parent="#accordionDescription">
+                                                <div class="card-body">
+                                                    <p>
+                                                        {{ product.description }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="productComments" role="tabpanel"
+                                 aria-labelledby="productComments-tab">
+                                <!-- product-review -->
+
+                                <div class="product-review-form mb-3" id="comment_form">
+                                    {% if user.is_authenticated %}
+                                        <div class="row align-items-center">
+                                            <div class="col-12">
+                                                <div class="form-element-row">
+                                                    <label for="phone-number" class="label-element">نظر شما</label>
+                                                    <textarea id="commentText" minlength="100" name="message"
+                                                              id="comment" cols="30"
+                                                              rows="10"
+                                                              class="input-element"></textarea>
+                                                </div>
+                                                <div class="form-element-row">
+                                                    <label for="phone-number" class="label-element"> خرید این محصول را
+                                                        توصیه می‌کنم</label>
+                                                    <input type="checkbox" checked="true" name="is_suggested"
+                                                           id="is_suggested">
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <a class="btn btn-primary"
+                                                       onclick="sendProductComment({{ product.id }})">ارسـال نظـر</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    {% endif %}
+                                </div>
+                                <div id="comments_area">
+                                    {% include 'product_module/includes/product_comment_partial.html' %}
+                                </div>
+                                <!-- end product-review -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end product-tab-content -->
+            <section class="product-carousel">
+                <div class="section-title">
+                    <i class="fad fa-retweet"></i>
+                    پیشنهادهای مشابه
+                </div>
+                <div class="swiper-container slider-lg swiper-container-initialized swiper-container-horizontal swiper-container-rtl">
+                    <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);">
+                        {% for product in related_products %}
+                            <div class="swiper-slide swiper-slide-active" style="width: 213.429px; margin-left: 10px;">
+                                {% include 'inclode/product_item_partial2.html' with product=product %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide"
+                         aria-disabled="false"></div>
+                    <div class="swiper-button-prev swiper-button-disabled" tabindex="0" role="button"
+                         aria-label="Previous slide" aria-disabled="true"></div>
+                    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+            </section>
+        </div>
+    </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {#    <section>#}
+    {#        <div class="container">#}
+    {#            <div class="row">#}
+    {##}
+    {#                <div class="col-sm-9 padding-right">#}
+    {#                    <div class="product-details"><!--product-details-->#}
+    {#                        <div class="col-sm-5">#}
+    {#                            <div class="view-product">#}
+    {#                                {% if product.image %}#}
+    {#                                    <img src="{{ product.image.url }}" alt="" id="main_image">#}
+    {#                                {% else %}#}
+    {#                                    <img src="/static/images/product-details/1.jpg" alt="" id="main_image">#}
+    {#                                {% endif %}#}
+    {##}
+    {#                                <a href="{{ product.image.url }}" data-lightbox="product-image"#}
+    {#                                   id="show-large-image-modal">#}
+    {#                                    <h3>#}
+    {#                                        بزرگنمایـی#}
+    {#                                    </h3>#}
+    {#                                </a>#}
+    {##}
+    {#                            </div>#}
+    {#                            <div id="similar-product" class="carousel slide" data-ride="carousel">#}
+    {##}
+    {#                                <!-- Wrapper for slides -->#}
+    {#                                <div class="carousel-inner">#}
+    {#                                    {% for group in gallery_product %}#}
+    {#                                        <div class="item {% if forloop.first %}active{% endif %}">#}
+    {#                                            {% for gallery in group %}#}
+    {#                                                <a onclick="showLargeImage('{{ gallery.image.url }}')">#}
+    {#                                                    <img width="85" src="{{ gallery.image.url }}" alt="">#}
+    {#                                                </a>#}
+    {#                                            {% endfor %}#}
+    {#                                        </div>#}
+    {#                                    {% endfor %}#}
+    {#                                </div>#}
+    {##}
+    {#                                <!-- Controls -->#}
+    {#                                <a class="right item-control" href="#similar-product" data-slide="next">#}
+    {#                                    <i class="fa fa-angle-right"></i>#}
+    {#                                </a>#}
+    {#                                <a class="left item-control" href="#similar-product" data-slide="prev">#}
+    {#                                    <i class="fa fa-angle-left"></i>#}
+    {#                                </a>#}
+    {#                            </div>#}
+    {##}
+    {#                        </div>#}
+    {#                        <div class="col-sm-7">#}
+    {#                            <div class="product-information"><!--/product-information-->#}
+    {#                                <img src="/static/images/product-details/new.png" class="newarrival" alt="">#}
+    {#                                <div>#}
+    {#                                    <h2>{{ product.title }}</h2>#}
+    {#                                    <p>شناسـه : {{ product.id }}</p>#}
+    {#                                </div>#}
+    {#                                <div>#}
+    {#									<span>#}
+    {#										<span>قیمت : {{ product.price | three_digits_currency }}</span>#}
+    {#									</span>#}
+    {#                                    <span>#}
+    {##}
+    {#                                        <label>تعداد :</label>#}
+    {#										<input id="product_count" type="number" min="1" value="1" class="search_box">#}
+    {#										<button onclick="addProductToOrder({{ product.id }})"#}
+    {#                                                class="btn btn-fefault cart">#}
+    {#											<i class="fa fa-shopping-cart"></i>#}
+    {#											افـزودن به سبـد خریـد#}
+    {#										</button>#}
+    {##}
+    {#                                    </span>#}
+    {#                                </div>#}
+    {#                                <div>#}
+    {#                                    <p><b>موجـودی :</b> در انبـار موجود می باشد</p>#}
+    {#                                    <p><b>شرایـط :</b> جدیـد</p>#}
+    {#                                    {% if product.brand %}#}
+    {#                                        <p><b>برنـد :</b> {{ product.brand.title }} </p>#}
+    {#                                    {% endif %}#}
+    {#                                </div>#}
+    {#                            </div><!--/product-information-->#}
+    {#                        </div>#}
+    {#                    </div><!--/product-details-->#}
+    {##}
+    {#                    <div class="category-tab shop-details-tab"><!--category-tab-->#}
+    {#                        <div class="col-sm-12">#}
+    {#                            <ul class="nav nav-tabs">#}
+    {#                                <li class="active"><a href="#details" data-toggle="tab">جزئیات</a></li>#}
+    {#                                <li><a href="#reviews" data-toggle="tab">نظرات (5)</a></li>#}
+    {#                            </ul>#}
+    {#                        </div>#}
+    {#                        <div class="tab-content">#}
+    {#                            <div class="tab-pane fade active in" id="details">#}
+    {#                                <div class="col-md-12">#}
+    {#                                    {{ product.description |safe }}#}
+    {#                                </div>#}
+    {#                            </div>#}
+    {##}
+    {#                            <div class="tab-pane fade" id="reviews">#}
+    {#                                <div class="col-sm-12">#}
+    {#                                    <ul>#}
+    {#                                        <li><a href=""><i class="fa fa-user"></i>مشتـری 1</a></li>#}
+    {#                                        <li><a href=""><i class="fa fa-clock-o"></i>12:41 ب . ظ</a></li>#}
+    {#                                        <li><a href=""><i class="fa fa-calendar-o"></i>29 تیـر 1397</a></li>#}
+    {#                                    </ul>#}
+    {#                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده ازلورملورم#}
+    {#                                        ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان#}
+    {#                                        گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و#}
+    {#                                        برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای#}
+    {#                                        کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان#}
+    {#                                        جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه#}
+    {#                                        ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.</p>#}
+    {#                                    <p><b>نظـر خود را بنویسیـد</b></p>#}
+    {##}
+    {#                                    <form action="#">#}
+    {#										<span>#}
+    {#											<input type="text" placeholder="نام و نام خانوادگـی">#}
+    {#											<input type="email" placeholder="آدرس ایمیـل">#}
+    {#										</span>#}
+    {#                                        <textarea name=""></textarea>#}
+    {#                                        <b>رتبـه : </b> <img src="/static/images/product-details/rating.png" alt="">#}
+    {#                                        <button type="button" class="btn btn-default pull-left">#}
+    {#                                            ارسـال#}
+    {#                                        </button>#}
+    {#                                    </form>#}
+    {#                                </div>#}
+    {#                            </div>#}
+    {##}
+    {#                        </div>#}
+    {#                    </div><!--/category-tab-->#}
+    {##}
+    {#                    <div class="recommended_items"><!--recommended_items-->#}
+    {#                        <h2 class="title text-center">محصولات مرتبط</h2>#}
+    {##}
+    {#                        <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">#}
+    {#                            <div class="carousel-inner">#}
+    {#                                {% for group in related_products %}#}
+    {#                                    <div class="item {% if forloop.first %}active{% endif %}">#}
+    {#                                        {% for product in group %}#}
+    {#                                            {% include 'inclode/product_item_partial.html' with product=product col_size=4 %}#}
+    {#                                        {% endfor %}#}
+    {#                                    </div>#}
+    {#                                {% endfor %}#}
+    {##}
+    {##}
+    {#                            </div>#}
+    {#                            {% if related_products|length > 1 %}#}
+    {#                                <a class="left recommended-item-control" href="#recommended-item-carousel"#}
+    {#                                   data-slide="prev">#}
+    {#                                    <i class="fa fa-angle-left"></i>#}
+    {#                                </a>#}
+    {#                                <a class="right recommended-item-control" href="#recommended-item-carousel"#}
+    {#                                   data-slide="next">#}
+    {#                                    <i class="fa fa-angle-right"></i>#}
+    {#                                </a>#}
+    {#                            {% endif %}#}
+    {#                        </div>#}
+    {#                    </div><!--/recommended_items-->#}
+    {##}
+    {#                </div>#}
+    {##}
+    {#                <div class="col-sm-3">#}
+    {#                    <div class="left-sidebar">#}
+    {#                        {% render_partial 'product_module.views.product_categories_components' %}#}
+    {#                        {% render_partial 'product_module.views.product_brands_components' %}#}
+    {##}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </section>#}
+
+{% endblock %}

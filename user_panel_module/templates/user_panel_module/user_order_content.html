@@ -1,0 +1,112 @@
+{% load poll_extras %}
+{% if order.orderdetaile_set.all %}
+
+    <div class="row mb-4">
+        <div class="col-xl-9 col-lg-8 col-md-8 mb-md-0 mb-3">
+            <div class="checkout-section shadow-around">
+                <div class="checkout-step">
+                    <ul>
+                        <li class="active"><span>سبد خرید</span></li>
+                        <li>
+                            <span>نحوه ارسال و پرداخت</span>
+                        </li>
+                        <li>
+                            <span>اتمام خرید و ارسال</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="checkout-section-content">
+                    <div class="cart-items">
+                        {% for detail in order.orderdetaile_set.all %}
+                            <div class="cart-item py-4 px-3">
+                                <div class="item-thumbnail">
+                                    <a href="#">
+                                        <img src="{{ detail.product.image.url }}" alt="item">
+                                    </a>
+                                </div>
+                                <div class="item-info flex-grow-1">
+                                    <div class="item-title">
+                                        <h2>
+                                            <a href="#">{{ detail.product.title }}</a>
+                                        </h2>
+                                    </div>
+                                    <div class="item-detail">
+                                        <ul>
+                                            <li>
+                                                <i class="far fa-id-card text-muted"></i>
+                                                <span>شناسه محصول : {{ detail.product.id }}</span>
+                                            </li>
+                                            <li>
+                                                <i class="far fa-store-alt text-muted"></i>
+                                                <span>نام فروشنده</span>
+                                            </li>
+                                            {% if detail.product.off %}
+                                                <li>
+                                                    <i class="far fa-shopping-cart text-muted"></i>
+                                                    <s class="nonStdElement text-danger"><span>قیمت تکی محصول : {{ detail.product.price | three_digits_currency }}</span></s>
+                                                </li>
+                                                <li>
+                                                    <i class="far fa-shopping-cart text-muted"></i>
+                                                    <span>قیمت تکی محصول همراه با تخفیف : {{ detail.product.offer_price | three_digits_currency }}</span>
+                                                </li>
+                                                {% else %}
+                                                <li>
+                                                    <i class="far fa-shopping-cart text-muted"></i>
+                                                    <span>قیمت تکی محصول : {{ detail.product.price | three_digits_currency }}</span>
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                        <div class="item-quantity--item-price">
+                                            <div class="item-quantity">
+                                                <div class="num-block">
+                                                    <div class="num-in">
+                                                    <span class="plus"
+                                                          onclick="changeOrderDetailCount({{ detail.id }},'increase')"></span>
+                                                        <input type="text" class="in-num" value="{{ detail.count }}"
+                                                               readonly="">
+                                                        <span class="minus "
+                                                              onclick="changeOrderDetailCount({{ detail.id }},'decrease')"></span>
+                                                    </div>
+                                                </div>
+                                                <button onclick="removeOrderDetail({{ detail.id }})"
+                                                        class="item-remove-btn mr-3">
+                                                    <i class="far fa-trash-alt"></i>
+                                                    حذف
+                                                </button>
+                                            </div>
+                                            <div class="item-price">
+                                                {% if detail.product.off %}
+                                                    {% moltiply2 detail.product.offer_price detail.count %}<span
+                                                        class="text-sm mr-1">تومان</span>
+                                                {% else %}
+                                                    {% moltiply2 detail.product.price detail.count %}<span
+                                                        class="text-sm mr-1">تومان</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-md-4">
+            <div class="shadow-around pt-3">
+                {% include 'user_panel_module/components/order_sum_result.html' %}
+                <div class="d-flex px-3 py-4">
+                    <a href="{% url 'order_shipping_payment' %}" class="btn btn-danger btn-block py-2">ادامه فرایند
+                        خرید</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="col-md-12">
+        <div class="alert alert-warning">
+            <p>سبد خرید شما خالی میباشد</p>
+        </div>
+    </div>
+
+{% endif %}

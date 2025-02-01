@@ -1,0 +1,71 @@
+{% extends 'shared/_layout.html' %}
+{% load render_partial %}
+
+
+{% block title %}
+ تماس با ما
+{% endblock %}
+
+{% block content %}
+
+    <main class="page-content" style="margin-top: 205.5px; transform: none;">
+        <div class="container" style="transform: none;">
+            <div class="row mb-5" style="transform: none;">
+                <div class="col-12">
+                    <div class="section-title mb-2">
+                        پیام شما
+                    </div>
+                    <div class="checkout-section shadow-around">
+                        <div class="modal-body" data-select2-id="select2-data-19-btj6">
+                            <form action="{% url 'contact_us_page' %}" method="post">
+                                {% csrf_token %}
+                                <div class="row" data-select2-id="select2-data-17-an4v">
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="text-sm text-muted mb-1">{{ form.full_name.label }}</div>
+                                        <div class="text-dark font-weight-bold">
+                                            <div class="form-element-row mb-0">
+                                                {{ form.full_name }}
+                                            </div>
+                                            {{ form.full_name.errors }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="text-sm text-muted mb-1">{{ form.email.label }}</div>
+                                        <div class="text-dark font-weight-bold">
+                                            <div class="form-element-row mb-0">
+                                                {{ form.email }}
+                                            </div>
+                                            {{ form.email.errors }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="text-sm text-muted mb-1">{{ form.title.label }}</div>
+                                        <div class="text-dark font-weight-bold">
+                                            <div class="form-element-row mb-0">
+                                                {{ form.title }}
+                                            </div>
+                                            {{ form.title.errors }}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <div class="text-sm text-muted mb-1">{{ form.message.label }}</div>
+                                        <div class="text-dark font-weight-bold">
+                                            <div class="form-element-row mb-0">
+                                                {{ form.message }}
+                                            </div>
+                                            {{ form.message.errors }}
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">  ذخیره  <i
+                                            class="fad fa-money-check-edit"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+<div class="profile-sidebar shadow-around">
+    <div class="d-flex align-items-center">
+        <div class="profile-sidebar">
+            <img src="/static/images/avatar/avatar.png" alt="avatar">
+        </div>
+        <div class="profile-info">
+            <div class="d-block">
+                <h6><strong>{{ user }}</strong></h6>
+            </div>
+            <div class="d-block">
+                <strong class="text-muted">{{ user.number }}</strong>
+            </div>
+        </div>
+    </div>
+    <div class="user-menu">
+        <ul>
+            <li>
+                <a class="{% if request.resolver_match.url_name == 'user_panel_dashbord' %}
+                            active{% endif %}" href="{% url 'user_panel_dashbord' %}">
+                    <i class="far fa-user-circle"></i>
+                    داشبورد
+                </a>
+            </li>
+            <li>
+                <a class="{% if request.resolver_match.url_name == 'user_edit_profile' %}
+                            active{% endif %}" href="{% url 'user_edit_profile' %}">
+                    <i class="far fa-user-cog"></i>
+                    اطلاعات حساب
+                </a>
+            </li>
+            <li>
+                <a class="{% if request.resolver_match.url_name == 'user_shoping_page' %}
+                            active{% endif %}" href="{% url 'user_shoping_page' %}">
+                    <i class="far fa-clipboard-list-check"></i>
+                    سفارش های من
+                </a>
+            </li>
+            <li>
+                <a class="{% if request.resolver_match.url_name == 'user_edit_address' %}
+                            active{% endif %}" href="{% url 'user_edit_address' %}">
+                    <i class="far fa-map-marked"></i>
+                    نشانی ها
+                </a>
+            </li>
+            <li>
+                <a class="{% if request.resolver_match.url_name == 'change_password_profile' %}
+                            active{% endif %}" href="{% url 'change_password_profile' %}">
+                    <i class="fal fa-user-secret"></i>
+                    تغییر کلمه عبور
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'logout_page' %}">
+                    <i class="far fa-sign-in-alt"></i>
+                    خروج
+                </a>
+            </li>
+        {% if user.is_superuser %}
+            <li>
+                <a class="{% if request.resolver_match.url_name == 'user_panel_dashbord' %}
+                            active{% endif %}" href="{% url 'user_shoping_admin_page' %}">
+                    <i class="far fa-shopping-bag"></i>
+                    خرید های کاربران
+                </a>
+            </li>
+        {% endif %}
+        </ul>
+    </div>
+</div>

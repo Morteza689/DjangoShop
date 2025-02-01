@@ -1,0 +1,124 @@
+{% extends 'shared/_layout.html' %}
+{% load poll_extras %}
+
+{% block title %}
+    سبد خرید
+{% endblock %}
+
+{% block content %}
+
+    {% if user.number_is_active %}
+        <main class="page-content" style="margin-top: 205.5px;">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-xl-9 col-lg-8 col-md-8 mb-md-0 mb-3">
+                        <div class="checkout-section shadow-around">
+                            <div class="checkout-step">
+                                <ul>
+                                    <li class="active">
+                                        <a href="#"><span>سبد خرید</span></a>
+                                    </li>
+                                    <li class="active">
+                                        <span>نحوه ارسال و پرداخت</span>
+                                    </li>
+                                    <li>
+                                        <span>اتمام خرید و ارسال</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="checkout-section-content">
+                                <div class="checkout-section-title">آدرس تحویل سفارش</div>
+                                <div class="row mx-0">
+
+                                    {% if user.useraddress_set.all %}
+
+
+                                        {% for address in user.useraddress_set.all %}
+                                            <div class="col-xl-3 col-lg-4 col-sm-6 mb-3">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="customRadio{{ address.id }}"
+                                                           data-custom-radio-id="{{ address.id }}" name="customRadio"
+                                                           class="custom-control-input">
+                                                    <label class="custom-control-label address-select"
+                                                           for="customRadio{{ address.id }}">
+                                                        <span class="head-address-select">به این آدرس ارسال شود</span>
+                                                        <span>{{ address.address }}</span>
+                                                        <span>گیرنده : {{ addres.receiver }}</span>
+                                                        <span>
+                                                    <i class="fa fa-phone"></i>
+                                                    شماره گیرنده  : {{ addres.number_receiver }}
+                                                </span>
+                                                        {% if address.zipcode %}
+                                                            <span>
+                                                    <i class="fa fa-user"></i>
+                                                    کد پستی : {{ address.zipcode }}
+                                                </span>
+                                                        {% endif %}
+                                                        <a href="{% url 'user_edit_address' %}"
+                                                           class="link--with-border-bottom edit-address-btn">
+                                                            ویرایش
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="col-xl-3 col-lg-4 col-sm-6 mb-3">
+                                            <div class="custom-control custom-radio">
+                                                <a class="add-address" href="{% url 'user_edit_address' %}">
+                                                    افزودن
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+                                <div class="checkout-section-title">شیوه پرداخت</div>
+                                <div class="payment-selection">
+                                    <div class="custom-control custom-radio custom-control-inline mb-3">
+                                        <input type="radio" id="paymentSelection1" name="paymentSelection"
+                                               class="custom-control-input" checked="">
+                                        <label class="custom-control-label payment-select" for="paymentSelection1">
+                                            <span class="d-flex align-items-center">
+                                                <i class="fad fa-credit-card"></i>
+                                                <span>
+                                                    <span class="title">پرداخت اینترنتی</span>
+                                                    <span class="subtitle">آنلاین با تمامی کارت‌های بانکی</span>
+                                                </span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-4">
+                        <div class="shadow-around pt-3">
+                            {% include 'user_panel_module/components/order_sum_result.html' %}
+                            <div class="d-flex px-3 py-4">
+                                <a onclick="getAddressId()" href="{% url 'request_payment' %}"
+                                   class="btn btn-danger btn-block py-2">پرداخت و ثبت نهایی سفارش</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    {% else %}
+        <main class="page-content" style="margin-top: 205.5px;">
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="alert alert-warning">
+                        <p>ابتدا باید شماره تلفن خود را تایید کنید</p>
+                        <a class="btn btn-info" href="{% url 'add_number_page' %}">تایید</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    {% endif %}
+
+
+{% endblock %}

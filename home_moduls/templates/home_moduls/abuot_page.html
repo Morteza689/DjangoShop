@@ -1,0 +1,126 @@
+{% extends 'shared/_layout.html' %}
+{% load static %}
+{% block title %}
+    درباره ما
+{% endblock %}
+{% block content %}
+    {#    <div id="contact-page" class="container">#}
+    {#            <div class="bg">#}
+    {##}
+    {#                <div class="row">#}
+    {#                    <div class="col-sm-4">#}
+    {#                        <div class="contact-info">#}
+    {#                            <h2 class="title text-center">لوگـو شرکت</h2>#}
+    {#                            <img src="{{ site_setting.site_logo.url }}" class="img-responsive">#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="col-sm-8">#}
+    {#                        <div class="about">#}
+    {#                            <h2 class="title text-center">دربـاره ما</h2>#}
+    {#                            <p class="about-desc">#}
+    {#                                {{ site_setting.about_us_text }}#}
+    {#                            </p>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="row">#}
+    {#                    <div class="col-sm-12 about-address">#}
+    {#                        <address>#}
+    {#                            <p>{{ site_setting.site_name }}#}
+    {#                                | {{ site_setting.address }}#}
+    {#                                {% if site_setting.email %}#}
+    {#                                | ایمیـل : {{ site_setting.email }}#}
+    {#                                {% endif %}#}
+    {#                                {% if site_setting.phone %}#}
+    {#                                | تلفن تماس : {{ site_setting.phone }}#}
+    {#                                {% endif %}#}
+    {##}
+    {##}
+    {#                            </p>#}
+    {#                        </address>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="row">#}
+    {#                    <div class="container">#}
+    {#                        <div class="col-sm-12" style="overflow: hidden; margin-bottom: 40px">    			   		<h2 class="title text-center">مـا اینجـا هستیـم ... </h2>    			    						<div id="gmap" class="contact-map">#}
+    {#                                <img src="{% static 'images/home/Map.jpg' %}" alt="Map">#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#            </div>#}
+    {#        </div>#}
+
+
+
+
+
+
+
+
+
+    <style>
+        .map-container {
+            overflow: hidden;
+            padding-bottom: 56.25%;
+            position: relative;
+            height: 0;
+        }
+
+        .map-container iframe {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+    </style>
+
+
+    <main class="page-content" style="margin-top: 205.5px; transform: none;">
+        <div class="container" style="transform: none;">
+            <div class="row" style="transform: none;">
+                <div class="row contact-info container text-center">
+                    <div class="contact-info container">
+                        <h2 class="title text-center" style="color: #117a8b">لوگـو فروشگاه</h2>
+                        <img src="{{ site_setting.site_logo.url }}" width="200" class="img-responsive">
+                        <h3 class="container">{{ site_setting.site_name }}</h3>
+                        <hr>
+                        <br>
+                        <h6 class="container">{{ site_setting.about_us_text|linebreaks }}</h6>
+                        <br>
+                        <div class="social">
+                            <ul>
+                                {% if site_setting.instagram_url %}
+                                    <li>
+                                        <a href="{{ site_setting.instagram_url }}" target="_blank" class="instagram"><i
+                                                class="fab fa-instagram"></i></a>
+                                    </li>
+                                {% endif %}
+                                {% if site_setting.telegram_url %}
+                                    <li>
+                                        <a href="{{ site_setting.telegram_url }}" target="_blank" class="telegram"><i class="fab fa-telegram-plane"></i></a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <hr>
+                        <br>
+                    </div>
+                    <div class="contact-info container">
+                        <div id="map-container-google-1" class="z-depth-1-half map-container" style="height: 100px">
+                            <iframe src="https://maps.google.com/maps?q=30.409355,48.196379&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                    frameborder="0"
+                                    style="border:0" allowfullscreen></iframe>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends 'shared/_layout.html' %}
+{% load render_partial %}
+{% load poll_extras %}
+{% block title %}
+    داشبورد
+{% endblock %}
+
+{% block content %}
+    <main class="page-content" style="margin-top: 205.5px; transform: none;">
+        <div class="container" style="transform: none;">
+            <div class="row mb-5" style="transform: none;">
+                <div class="col-lg-3 col-md-4 mb-md-0 mb-3 sticky-sidebar"
+                     style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+
+                    <div class="theiaStickySidebar"
+                         style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;">
+                        <div class="sidebar-widget">
+                            {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+                        </div>
+                        <div class="resize-sensor"
+                             style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;">
+                            <div class="resize-sensor-expand"
+                                 style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                                <div style="position: absolute; left: 0px; top: 0px; transition: all 0s ease 0s; width: 712px; height: 668px;"></div>
+                            </div>
+                            <div class="resize-sensor-shrink"
+                                 style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                                <div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="section-title mb-2">
+                                اطلاعات شخصی
+                            </div>
+                            <section class="shadow-around p-3">
+                                <div class="row">
+                                    <div class="col-lg-6 mb-4">
+                                        <div class="text-sm text-muted">نام و نام خانوادگی:</div>
+                                        {% if user.get_full_name %}
+                                        <div class="text-dark font-weight-bold">{{ user.get_full_name }}</div>
+                                            {% else %}
+                                            <div class="text-dark font-weight-bold">-</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-lg-6 mb-4">
+                                        <div class="text-sm text-muted">پست الکترونیک:</div>
+                                        <div class="text-dark font-weight-bold">{{ user.email }}</div>
+                                    </div>
+                                    <div class="col-lg-6 mb-4">
+                                        <div class="text-sm text-muted">شماره تلفن همراه:</div>
+                                        {% if user.number %}
+                                            <div class="text-dark font-weight-bold">{{ user.number }}</div>
+                                        {% else %}
+                                            <div class="text-dark font-weight-bold">-</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-lg-6 mb-4">
+                                        <div class="text-sm text-muted">کد ملی:</div>
+                                        {% if user.national_code %}
+                                            <div class="text-dark font-weight-bold">{{ user.national_code }}</div>
+                                        {% else %}
+                                            <div class="text-dark font-weight-bold">-</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="text-center">
+                                            <a href="{% url 'user_edit_profile' %}" class="link--with-border-bottom">
+                                                <i class="far fa-edit"></i>
+                                                ویرایش اطلاعات شخصی
+                                            </a>
+                                        </div>
+                                        {% if user.number_is_active %}
+
+                                        {% else %}
+                                            <div class="text-center">
+                                                <a href="{% url 'add_number_page' %}" class="link--with-border-bottom">
+                                                    <i class="far fa-edit"></i>
+                                                    تایید شماره تلفن
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    {% if latest_order %}
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="section-title mb-2">
+                                    آخرین سفارش‌ها
+                                </div>
+                                <section class="table--order shadow-around">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>شماره سفارش</th>
+                                                <th>تاریخ ثبت سفارش</th>
+                                                <th>مبلغ کل</th>
+                                                <th>عملیات پرداخت</th>
+                                                <th>وضعیت</th>
+                                                <th>جزییات</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for order in latest_order %}
+                                                <tr>
+                                                    <td> {{ order.id }} </td>
+                                                    <td class="order-code">{{ order.id }}</td>
+                                                    <td>{{ order.paymant_date | show_jalali_date }}</td>
+                                                    <td>{{ order.calculate_total_price | three_digits_currency }}</td>
+                                                    <td>
+                                                        <span class="font-weight-bold text-success">پرداخت شده</span>
+                                                    </td>
+                                                    {% if order.posted %}
+                                                        <td><span
+                                                                class="font-weight-bold text-info">ارسال شده</span>
+                                                        </td>
+                                                    {% else %}
+                                                        <td><span
+                                                                class="font-weight-bold text-info">در حال اماده سازی</span>
+                                                        </td>
+                                                    {% endif %}
+                                                    <td class="order-detail-link">
+                                                        <a href="{% url 'user_shoping_detail_page' order_id=order.id %}">
+                                                            <i class="far fa-chevron-left"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-center py-3">
+                                        <a href="{% url 'user_shoping_page' %}"
+                                           class="btn btn-info d-flex align-items-center justify-content-center text-dark">
+                                            مشاهده لیست سفارش ها
+                                            <i class="fal fa-arrow-to-left mr-1"></i>
+                                        </a>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    {% endif %}
+
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

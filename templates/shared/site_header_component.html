@@ -1,0 +1,185 @@
+{% load render_partial %}
+
+<header class="page-header">
+    <div class="top-page-header">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="contact-list">
+                    <ul>
+                        <li><i class="fas fa-phone-rotary"></i><a
+                                href="tel: {{ site_setting.phone }}">{{ site_setting.phone }}</a></li>
+                        <li><i class="fas fa-envelope"></i><a
+                                href="mailto: {{ site_setting.email }}">{{ site_setting.email }}</a></li>
+                    </ul>
+                </div>
+                <div class="top-header-menu">
+                    <ul>
+                        <li><a href="{% url 'home_page' %}">خانه</a></li>
+                        <li><a href="{% url 'product-list' %}">فروشگاه</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="bottom-page-header">
+            <div class="d-flex align-items-center">
+                <div class="site-logo">
+                    <a href="{% url 'home_page' %}">
+                        <img src="{{ site_setting.site_logo.url }}" width="100" alt="logo">
+
+                    </a>
+                </div>
+                <div class="search-box">
+                    <form id="search_form" action="{% url 'product-list' %}">
+                        <input type="text" name="search" id="search_product_box"
+                               placeholder="نام محصول یا برند را جستجو کنید...">
+                        <i class="far fa-search" onclick="
+                                {% if request.resolver_match.url_name == 'product-list' or request.resolver_match.url_name == 'product-categories-list' or request.resolver_match.url_name == 'product-list-by-brands' %}
+                                    filterProduct()
+                                {% else %}
+                                    productS()
+                                {% endif %}
+                                "></i>
+                    </form>
+                </div>
+            </div>
+            <div class="user-items">
+                <div class="user-item cart-list">
+                    <a href="{% url 'user_order_page' %}">
+                        <i class="fal fa-shopping-basket"></i>
+                    </a>
+                </div>
+                <div class="user-item account">
+                    {% if user.is_authenticated %}
+                        <a href="#">
+                            {{ user }}
+                            <i class="fad fa-chevron-down text-sm mr-1"></i>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login_page' %}" class="btn-auth">
+                            <i class="fal fa-user-circle"></i>
+                            ورود و عضویت
+                        </a>
+                    {% endif %}
+
+
+                    <ul class="dropdown--wrapper">
+                        {% if user.is_authenticated %}
+                            <li class="header-profile-dropdown-account-container">
+                                <a href="{% url 'user_panel_dashbord' %}" class="d-block">
+                                        <span class="header-profile-dropdown-user">
+                                            <span class="header-profile-dropdown-user-img">
+                                                <img src="/static/images/avatar/avatar.png">
+                                            </span>
+                                            <span class="header-profile-dropdown-user-info">
+                                                <p class="header-profile-dropdown-user-name">
+                                                    {{ user }}
+                                                </p>
+                                                <span class="header-profile-dropdown-user-profile-link">مشاهده حساب
+                                                    کاربری</span>
+                                            </span>
+                                        </span>
+                                </a>
+                            </li>
+                            <hr>
+                            <li>
+                                <a href="{% url 'user_panel_dashbord' %}">
+                                    داشبورد
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'logout_page' %}">
+                                    خروج
+                                </a>
+                            </li>
+
+                        {% else %}
+                            <li>
+                                <a href="{% url 'login_page' %}" class="dropdown--btn-primary">وارد شوید</a>
+                            </li>
+                            <li>
+                                <span>کاربر جدید هستید؟</span>
+                                <a href="{% url 'register_page' %}" class="border-bottom-dt">ثبت نام</a>
+                            </li>
+
+
+                        {% endif %}
+                        <hr>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <nav class="nav-wrapper">
+            <ul>
+
+                <li>
+                    <a href="{% url 'product-list' %}"><i class="fal fa-apple-crate text-warning"></i>محصولات</a>
+                </li>
+                <li>
+                    <a href="{% url 'user_panel_dashbord' %}"><i class="fal fa-shield-check text-success"></i>حساب
+                        من</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fal fa-plus-square text-primary"></i>محصولات ویژه</a>
+                </li>
+                <li>
+                    <a href="{% url 'abuot_page' %}"><i class="fal fa-coin text-secondary"></i>درباره ما</a>
+                </li>
+                <li>
+                    <a href="{% url 'contact_us_page' %}"><i></i>سوال دارید؟</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+<div class="header-responsive fixed--header-top">
+    <div class="header-top">
+        <div class="side-navigation-wrapper">
+            <button class="btn-toggle-side-navigation"><i class="far fa-bars"></i></button>
+            <div class="side-navigation">
+                <div class="site-logo">
+                    <a href="{% url 'home_page' %}">
+                        <img src="{{ site_setting.site_logo.url }}" width="100" alt="logo">
+                    </a>
+                </div>
+                <div class="divider"></div>
+                <ul class="not-list-children">
+                    <li><a href="{% url 'home_page' %}"><i class="fal fa-home"></i> خانه</a></li>
+                    <li><a href="{% url 'product-list' %}"><i class="fal fa-apple-crate"></i> محصولات</a></li>
+                    <li><a href="{% url 'user_panel_dashbord' %}"><i class="fal fa-user"></i>حساب من</a></li>
+                    <li><a href="{% url 'abuot_page' %}"><i class="fal fa-coin text-secondary"></i>درباره ما</a></li>
+                </ul>
+                <div class="divider"></div>
+
+            </div>
+            <div class="overlay-side-navigation" style="display: none;"></div>
+        </div>
+        <div class="site-logo">
+            <a href="{% url 'home_page' %}">
+                <img src="{{ site_setting.site_logo.url }}" width="100" alt="logo">
+            </a>
+        </div>
+        <div class="header-tools">
+            <div class="cart-side">
+                <a href="{% url 'user_order_page' %}">
+                    <i class="far fa-shopping-basket"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="header-bottom">
+        <div class="search-box">
+            <form id="search_form" action="{% url 'product-list' %}">
+                <input type="text" name="search" id="search_product_box"
+                       placeholder="نام محصول یا برند را جستجو کنید...">
+                <i class="far fa-search" onclick="filterProduct()"></i>
+            </form>
+        </div>
+        <div class="header-tools">
+            <a href="{% url 'user_panel_dashbord' %}"><i class="far fa-user-circle"></i></a>
+        </div>
+    </div>
+</div>

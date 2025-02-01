@@ -1,0 +1,128 @@
+{% extends 'shared/_layout.html' %}
+{% load render_partial %}
+{% load poll_extras %}
+
+{% block title %}
+    خرید
+{% endblock %}
+
+{% block content %}
+    <main class="page-content" style="margin-top: 205.5px; transform: none;">
+        <div class="container" style="transform: none;">
+            <div class="row mb-5" style="transform: none;">
+                <div class="col-lg-3 col-md-4 mb-md-0 mb-3 sticky-sidebar"
+                     style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+
+                    <div class="theiaStickySidebar"
+                         style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;">
+                        <div class="sidebar-widget">
+                            {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+                        </div>
+                        <div class="resize-sensor"
+                             style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;">
+                            <div class="resize-sensor-expand"
+                                 style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                                <div style="position: absolute; left: 0px; top: 0px; transition: all 0s ease 0s; width: 403px; height: 612px;"></div>
+                            </div>
+                            <div class="resize-sensor-shrink"
+                                 style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                                <div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-8">
+                    <div class="section-title mb-2">
+                        مشخصات خرید
+                    </div>
+                    <div class="checkout-section shadow-around">
+                        <div class="checkout-section-content">
+                            <div class="row mx-0">
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr class="alert alert-success">
+                                                <th>#</th>
+                                                <th>نام محصول</th>
+                                                <th>مبلغ کل</th>
+                                                <th>تعداد</th>
+                                                <th>جزییات</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for detail in order.orderdetaile_set.all %}
+                                                <tr>
+                                                    <td> {{ detail.id }} </td>
+                                                    <td>{{ detail.product.title }}</td>
+                                                    <td>{{ detail.final_price | three_digits_currency }}</td>
+                                                    <td>{{ detail.count }}</td>
+                                                    <td class="order-detail-link">
+                                                        <a href="{% url 'product-detail' slug=detail.product.slug %}">
+                                                            <i class="far fa-chevron-left"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    <div class="text-center alert alert-info">
+                                        <p>کاربر : {{ order.address.user }}</p>
+                                        <p>گیرنده : {{ order.address.receiver }}</p>
+                                        <p>آدرس : {{ order.address }}</p>
+                                        <p>شماره تماس : {{ order.address.number_receiver }}</p>
+                                        <p>کد پستی : {{ order.address.zipcode }}</p>
+                                    </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="section-title mb-2">
+                                    فرم ارسال
+                                </div>
+                                <section class="shadow-around p-3">
+                                    <form action="{% url 'user_shoping_detail_admin_page' order_id=order.id %}"
+                                          method="post">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-lg-6 mb-5">
+                                                <div class="text-sm text-muted mb-3">{{ form.ref_code_post.label }}</div>
+                                                <div class="text-dark font-weight-bold">
+                                                    <div class="form-element-row mb-0">
+                                                        {{ form.ref_code_post }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 mb-5">
+                                                <div class="text-sm text-muted mb-3">{{ form.posted.label }}</div>
+                                                <div class="text-dark font-weight-bold">
+                                                    <div class="form-element-row mb-0">
+                                                        {{ form.posted }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-element-row text-left">
+                                                    <button class="btn-element btn-success-element">
+                                                        <i class="fad fa-user-edit"></i>
+                                                        ذخیره تغییرات
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+{% endblock %}

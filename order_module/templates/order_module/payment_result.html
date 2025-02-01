@@ -1,0 +1,82 @@
+{% extends 'shared/_layout.html' %}
+
+{% block title %}
+    نتیجه تراکنش
+{% endblock %}
+
+{% block content %}
+    <main class="page-content" style="margin-top: 205.5px;">
+        <div class="container">
+
+            <div class="row mb-4">
+                <div class="col-xl-9 col-lg-8 col-md-8 mb-md-0 mb-3">
+                    <div class="checkout-section shadow-around">
+                        <div class="checkout-step">
+                            <ul>
+                                <li class="active">
+                                    <a href="#"><span>سبد خرید</span></a>
+                                </li>
+                                <li class="active">
+                                    <span>نحوه ارسال و پرداخت</span>
+                                </li>
+                                <li class="active">
+                                    <span>اتمام خرید و ارسال</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {% if success %}
+                            <div class="checkout-message">
+                                <div class="checkout-message-success mb-3">
+                                    <div class="icon-message success-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    سفارش با کد پیگیری <span class="order-code">{{ ref_code }}</span> با موفقیت پرداخت و
+                                    ثبت گردید.
+                                </div>
+                                <div class="text-center text-muted">
+                                    <p class="mb-4">
+                                        پرداخت با موفقیت انجام شد. سفارش شما با موفقیت ثبت شد
+                                        از اینکه ما را برای خرید انتخاب کردید از
+                                        شما سپاسگزاریم.
+                                    </p>
+                                </div>
+                            </div>
+                        {% elif error %}
+                            <div class="checkout-message">
+                                <div class="checkout-message-failed mb-3">
+                                    <div class="icon-message failed-icon">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    {{ error }}
+                                </div>
+                                <div class="text-center text-muted">
+                                    <p class="text-sm">
+                                        چنانچه طی این فرایند مبلغی از حساب شما کسر شده است، طی ۷۲ ساعت آینده به حساب شما
+                                        باز خواهد گشت.
+                                    </p>
+                                </div>
+                            </div>
+                            {% elif info %}
+                            <div class="checkout-message">
+                                <div class="checkout-message-failed mb-3">
+                                    <div class="icon-message failed-icon">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    {{ info }}
+                                </div>
+                                <div class="text-center text-muted">
+                                    <p class="text-sm">
+                                        چنانچه طی این فرایند مبلغی از حساب شما کسر شده است، طی ۷۲ ساعت آینده به حساب شما
+                                        باز خواهد گشت.
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+{% endblock %}

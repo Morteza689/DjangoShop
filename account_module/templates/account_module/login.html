@@ -1,0 +1,74 @@
+{% extends 'account_module/shared/_layout.html' %}
+
+{% block title %}
+    ورود
+{% endblock %}
+
+{% block content %}
+    <main class="page-content">
+        <div class="container">
+            <div class="auth-wrapper">
+                <div class="auth-form shadow-around">
+                    <div class="site-logo">
+                        <a href="{{ site_setting.site_url }}">
+                            <img src="{{ site_setting.site_logo.url }} " width="100" alt="logo">
+                        </a>
+                    </div>
+                    <div class="auth-form-title text-center">
+                        ورود به سایت {{ site_setting.site_name }}
+                    </div>
+                    <form action="{% url 'login_page' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-element-row">
+                            <label for="phone-number" class="label-element">{{ login_form.email.label }}</label>
+                            <div class="form-element-with-icon">
+                                {{ login_form.email }}
+                                <i class="fad fa-mobile-alt"></i>
+                            </div>
+                             {% if login_form.email.errors %}
+                                <div class="alert alert-danger">
+                                    {{ login_form.email.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-element-row">
+                            <label for="password" class="label-element">
+                                    <span class="d-flex justify-content-between">
+                                        <span>{{ login_form.password.label }}</span>
+                                        <a href="{% url 'forget_password_page' %}" class="link--with-border-bottom">رمز عبور خود را فراموش کرده‌ام</a>
+                                    </span>
+                            </label>
+                            <div class="form-element-with-icon">
+                                {{ login_form.password }}
+                                <i class="fad fa-key-skeleton"></i>
+                            </div>
+                            {% if login_form.password.errors %}
+                                <div class="alert alert-danger">
+                                    {{ login_form.password.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-element-row">
+                            <label class="container-checkbox">
+                                مرا به خاطر داشته باش
+                                <input type="checkbox" checked="checked">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="form-element-row text-left">
+                            <button class="btn-element btn-info-element">
+                                <i class="fad fa-sign-in-alt"></i>
+                                ورود
+                            </button>
+                        </div>
+
+                    </form>
+                    <div class="auth-form-footer">
+                        <span>کاربر جدید هستید؟</span>
+                        <a href="{% url 'register_page' %}" class="link--with-border-bottom">ثبت نام</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

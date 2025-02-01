@@ -1,0 +1,32 @@
+<!-- JS Global Compulsory -->
+<script src="/static/js/jquery-3.5.1.min.js"></script>
+<script src="/static/js/plugins/popper.min.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<!-- JS Implementing Plugins -->
+<script src="/static/js/plugins/apexcharts.min.js"></script>
+<script src="/static/js/plugins/jquery.knob.js"></script>
+<script src="/static/js/plugins/jquery.throttle.js"></script>
+<script src="/static/js/plugins/jquery.classycountdown.min.js"></script>
+<script src="/static/js/plugins/jquery.nicescroll.min.js"></script>
+<script src="/static/js/plugins/nouislider.min.js"></script>
+<script src="/static/js/plugins/sweetalert2.all.min.js"></script>
+<script src="/static/js/plugins/select2.full.min.js"></script>
+<script src="/static/js/plugins/swiper.min.js"></script>
+<script src="/static/js/plugins/ResizeSensor.min.js"></script>
+<script src="/static/js/plugins/theia-sticky-sidebar.min.js"></script>
+<script src="/static/js/plugins/zoomsl.min.js"></script>
+<script src="/static/js/plugins/wNumb.js"></script>
+<!-- JS Template -->
+<script src="/static/js/theme.js"></script>
+<!-- Here goes your custom.js -->
+<script src="/static/js/custom.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#countdown--offer-slider').ClassyCountdown({
+            theme: "black",
+            end: $.now() + 645600,
+            labels: false,
+        });
+    });
+</script>

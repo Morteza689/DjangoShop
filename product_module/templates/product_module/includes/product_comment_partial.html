@@ -1,0 +1,41 @@
+{% load poll_extras %}
+<div class="section-title mb-1 mt-4">
+    نظرات کاربران ({{ comments_count }})
+</div>
+<hr>
+<div class="comments-list">
+    {% for comment in comments %}
+        <div class="row">
+            <div class="col-md-3 aside">
+                <ul class="comments-user-shopping">
+                    <li>
+                        <div class="cell cell-name">
+                            {{ comment.user }}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cell">
+                            {{ comment.create_date | show_jalali_date }}
+                        </div>
+                    </li>
+                </ul>
+                {% if comment.is_suggested == True %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-thumbs-up"></i> خرید این محصول را توصیه می‌کنم
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger">
+                        <i class="fas fa-thumbs-down"></i> خرید این محصول را توصیه نمی‌کنم
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-9 article">
+                <p>{{ comment.text }}</p>
+                <div class="footer">
+                    <div class="comments-likes">
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

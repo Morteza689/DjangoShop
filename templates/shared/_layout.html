@@ -1,0 +1,34 @@
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/x-icon" href="{{ site_setting.site_favicon.url }}">
+    <title>{% block title %}{% endblock %} | {{ site_setting.site_name }}</title>
+    {% include 'shared/header_references.html' %}
+    <meta name="description" content="{{ site_setting.site_description }}">
+    <meta property="og:site_name" value="{{ site_setting.site_name }}">
+    <meta property="og:title" content="{{ site_setting.site_name }}">
+    <meta property="og:url" content="https://{{ site_setting.site_url }}/">
+    <meta property="og:image:url" content="https://{{ site_setting.site_url }}/{{ site_setting.site_logo }}">
+    <meta property="og:image:type" content=image/png>
+    <meta property="og:image:secure_url" content="https://{{ site_setting.site_url }}/{{ site_setting.site_logo }}"/>
+    <meta property="og:image:alt" content="{{ site_setting.site_name }}" />
+    <meta property="og:description" content="{{ site_setting.site_description }}">
+    <meta property="og:price:currency" content="IRR">
+    <meta property="og:locale" content="ir_FA">
+    {% block header_references %}{% endblock %}
+</head>
+<body>
+<div class="page-wrapper">
+    {% render_partial 'home_moduls.views.site_header_component' %}
+    {% block content %}{% endblock %}
+    {% render_partial 'home_moduls.views.site_footer_component' %}
+</div>
+{% include 'shared/footer_references.html' %}
+{% block footer_references %}{% endblock %}
+</body>
+</html>

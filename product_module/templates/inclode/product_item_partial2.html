@@ -1,0 +1,52 @@
+{% load thumbnail %}
+{% load poll_extras %}
+
+<div class="swiper-slide swiper-slide-active" style="width: 218px; margin-left: 8px;">
+    <div class="product-card">
+        <div class="product-card-top">
+            <a href="{{ product.get_absolute_url }}" class="product-image">
+                {% thumbnail product.image "100x100" quality=95 crop='center' as im %}
+                    <img src="{{ im.url }}" alt="">
+                {% endthumbnail %}
+            </a>
+
+        </div>
+        <div class="product-card-middle">
+            <div class="ratings-container">
+                <div class="ratings">
+                    <div class="ratings-val" style="width: 65%;"></div>
+                </div>
+            </div>
+            <h6 class="product-name">
+                <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+            </h6>
+            {% if product.off %}
+                <div class="product-price product-price-clone">{{ product.offer_price | three_digits_currency }}</div>
+                {% else %}
+            <div class="product-price product-price-clone">{{ product.price | three_digits_currency }}</div>
+            {% endif %} 
+
+        </div>
+        <div class="product-card-bottom">
+            {% if product.off %}
+                <s class="nonStdElement text-danger">
+                    <div class=" text-danger">
+                        {{ product.price | three_digits_currency }}
+                    </div>
+                </s>
+                <div class="product-price">
+                    {{ product.offer_price | three_digits_currency }}
+                </div>
+            {% else %}
+                <div class="product-price">
+                    {{ product.price | three_digits_currency }}
+                </div>
+            {% endif %}
+
+            <a onclick="addProductToOrder2({{ product.id }})" class="btn-add-to-cart">
+                <i class="fad fa-cart-plus"></i>
+                افزودن به سبد خرید
+            </a>
+        </div>
+    </div>
+</div>

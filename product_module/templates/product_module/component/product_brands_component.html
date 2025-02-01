@@ -1,0 +1,28 @@
+{#<div class="brands_products"><!--brands_products-->#}
+{#    <h2>برنـد ها</h2>#}
+{#    <div class="brands-name">#}
+{#        <ul class="nav nav-pills nav-stacked">#}
+{#            {% for brand in brands %}#}
+{#                <li><a href="{% url 'product-list-by-brands' brand=brand.url_title %}"> <span#}
+{#                        class="pull-left">({{ brand.product_count }})</span>{{ brand.title }}</a></li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#    </div>#}
+{#</div><!--/brands_products-->#}
+
+
+<div class="widget widget-filter-options shadow-around">
+    <div class="widget-title">برند</div>
+    <div class="widget-content">
+    <ul>
+        {% for brand in brands %}
+            <li><a href="{% url 'product-list-by-brands' brand=brand.url_title %}">
+                <label class="container-checkbox">
+                {{ brand.title }}
+                <span class="checkmark">({{ brand.product_count }})</span>
+                </label>
+            </a></li>
+        {% endfor %}
+    </ul>
+    </div>
+</div>
