@@ -1,0 +1,5 @@
+{
+  "description": "A complete online shopping platform built with Django featuring product catalog, user accounts, shopping cart, and secure payment system",
+  "topics": ["django", "e-commerce", "shop", "python", "web-development"],
+  "discussions_enabled": true
+}
